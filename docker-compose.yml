@@ -1,0 +1,30 @@
+version: "3.3"
+services:
+#  mysql:
+#    image: mysql:5.7
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_DATABASE: nestjs_database
+#      MYSQL_USER: docker
+#      MYSQL_PASSWORD: docker
+#      TZ: 'Asia/Tokyo'
+#    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+#    volumes:
+#      - ./docker/db/data:/var/lib/mysql
+#      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
+#      - ./docker/db/sql:/docker-entrypoint-initdb.d
+#    ports:
+#      - 3307:3306
+
+  nestjs:
+    build: .
+    tty: true
+    ports:
+      - "3200:3000"
+    volumes:
+      - type: bind
+        source: .
+        target: /usr/src/app
+#    depends_on:
+#      - mysql
+    command: "yarn start:dev"
