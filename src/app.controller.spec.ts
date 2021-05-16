@@ -1,22 +1,25 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-describe('AppController', () => {
-  let appController: AppController;
+describe('AppService', () => {
+  let service: AppService;
 
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
-      controllers: [AppController],
+    const module: TestingModule = await Test.createTestingModule({
       providers: [AppService],
     }).compile();
 
-    appController = app.get<AppController>(AppController);
+    service = module.get<AppService>(AppService);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+
+  describe('getPublicItems', () => {
+    it('should have deletePassword removed', () => {
+      const publicItems = service.getPublicItems();
+      expect(publicItems.every((item) => !('deletePassword' in item))).toBe(true);
     });
   });
 });
